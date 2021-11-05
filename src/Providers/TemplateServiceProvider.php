@@ -22,6 +22,7 @@ use Ceres\Extensions\TwigLayoutContainerInternal;
 use Ceres\Extensions\TwigStyleScriptTagFilter;
 use Ceres\Hooks\CeresAfterBuildPlugins;
 use Ceres\Hooks\UploadFavicon;
+use Ceres\Hooks\GenerateShopBuilderPresets;
 use Ceres\Widgets\WidgetCollection;
 use Ceres\Wizard\ShopWizard\Services\DefaultSettingsService;
 use Ceres\Wizard\ShopWizard\ShopWizard;
@@ -182,6 +183,7 @@ class TemplateServiceProvider extends ServiceProvider
 
         $eventDispatcher->listen(AfterBuildPlugins::class, CeresAfterBuildPlugins::class);
         $eventDispatcher->listen(AfterPluginSetAssociated::class, UploadFavicon::class);
+        $eventDispatcher->listen(GenerateShopBuilderPresetsEvent::class, GenerateShopBuilderPresets::class);
     }
 
     /**
