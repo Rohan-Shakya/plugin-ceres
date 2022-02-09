@@ -36,7 +36,7 @@ class DefaultContactPreset implements ContentPreset
 
     /** @var Translator */
     private $translator;
-    
+
     /**
      * @inheritDoc
      */
@@ -50,24 +50,10 @@ class DefaultContactPreset implements ContentPreset
 
         $this->createBackground($preset);
         $this->createHeadline();
-
-        if (strlen($this->config->contact->apiKey)) {
-            $row_1 = $this->createWidget('Ceres::TwoColumnWidget')
-                ->withSetting('layout', 'oneToOne')
-                ->withSetting('layoutTablet', 'oneToTwo')
-                ->withSetting('layoutMobile', 'stackedMobile');
-
-            $this->createContactDetailsWidget($row_1, 'first');
-            $this->createGoogleMapsWidget($row_1, 'second', $this->config->contact->apiKey);   // Migrate API Key
-            $this->createMailForm();
-        } else {
-            $row_1 = $this->createWidget('Ceres::TwoColumnWidget')
-                ->withSetting('layout', 'threeToNine')
-                ->withSetting('layoutTablet', 'stackedTablet')
-                ->withSetting('layoutMobile', 'stackedMobile');
-
-            $this->createContactDetailsWidget($row_1, 'first');
-            $this->createMailForm($row_1, 'second');
+        $this->createContactDetailsWidget();
+        $this->createMailForm();
+        if (!empty($this->config->contact->apiKey)) {
+            $this->createGoogleMapsWidget(null, null, $this->config->contact->apiKey);
         }
 
         return $preset->toArray();
@@ -92,36 +78,28 @@ class DefaultContactPreset implements ContentPreset
         $this->createWidget('Ceres::InlineTextWidget')
             ->withSetting('text', '<h1>{{ trans(\'Ceres::Template.contact\') }}</h1>')
             ->withSetting('appearance', 'none')
+            ->withSetting('customClass', 'container')
             ->withSetting('spacing.customPadding', true)
-            ->withSetting('spacing.padding.top.value', 0)
-            ->withSetting('spacing.padding.top.unit', null)
-            ->withSetting('spacing.padding.bottom.value', 0)
-            ->withSetting('spacing.padding.bottom.unit', null)
             ->withSetting('spacing.padding.left.value', 0)
             ->withSetting('spacing.padding.left.unit', null)
             ->withSetting('spacing.padding.right.value', 0)
             ->withSetting('spacing.padding.right.unit', null)
             ->withSetting('spacing.customMargin', true)
-            ->withSetting('spacing.margin.top.value', 3)
+            ->withSetting('spacing.margin.top.value', 5)
             ->withSetting('spacing.margin.top.unit', null);
-
-        $this->createWidget('Ceres::SeparatorWidget');
 
         $this->createWidget('Ceres::InlineTextWidget')
             ->withSetting('text', '<p>{{ trans(\'Ceres::Template.contactShopMessage\') }}</p>')
             ->withSetting('appearance', 'none')
-            ->withSetting('spacing.customMargin', true)
-            ->withSetting('spacing.margin.bottom.value', 5)
-            ->withSetting('spacing.margin.bottom.unit', null)
+            ->withSetting('customClass', 'container')
             ->withSetting('spacing.customPadding', true)
-            ->withSetting('spacing.padding.top.value', 0)
-            ->withSetting('spacing.padding.top.unit', null)
-            ->withSetting('spacing.padding.bottom.value', 0)
-            ->withSetting('spacing.padding.bottom.unit', null)
             ->withSetting('spacing.padding.left.value', 0)
             ->withSetting('spacing.padding.left.unit', null)
             ->withSetting('spacing.padding.right.value', 0)
-            ->withSetting('spacing.padding.right.unit', null);
+            ->withSetting('spacing.padding.right.unit', null)
+            ->withSetting('spacing.customMargin', true)
+            ->withSetting('spacing.margin.bottom.value', 3)
+            ->withSetting('spacing.margin.bottom.unit', null);
     }
 
     private function createContactDetailsWidget($parentFactory = null, $parentDropzone = null)
@@ -132,11 +110,10 @@ class DefaultContactPreset implements ContentPreset
             ->withSetting('fax', $this->translator->trans('Ceres::Widget.contactDetailsPlaceholderFax'))
             ->withSetting('email', $this->translator->trans('Ceres::Widget.contactDetailsPlaceholderEmail'))
             ->withSetting('businessTimes', '{{ trans(\'Ceres::Template.contactOpeningTimes\') }}')
-            ->withSetting('spacing.customPadding', true)
-            ->withSetting('spacing.padding.top.value', 4)
-            ->withSetting('spacing.padding.top.unit', null)
-            ->withSetting('spacing.padding.bottom.value', 5)
-            ->withSetting('spacing.padding.bottom.unit', null);
+            ->withSetting('spacing.customMargin', true)
+            ->withSetting('customClass', 'container')
+            ->withSetting('spacing.margin.bottom.value', 4)
+            ->withSetting('spacing.margin.bottom.unit', null);
     }
 
     private function createGoogleMapsWidget($parentFactory = null, $parentDropzone = null, $apiKey = '')
@@ -153,6 +130,10 @@ class DefaultContactPreset implements ContentPreset
     {
         $formWidget = $this->createRootOrChild('Ceres::MailFormWidget', $parentFactory, $parentDropzone)
             ->withSetting('appearance', 'primary')
+            ->withSetting('customClass', 'widget-dark container')
+            ->withSetting('spacing.customMargin', true)
+            ->withSetting('spacing.margin.bottom.value', 4)
+            ->withSetting('spacing.margin.bottom.unit', null)
             ->withSetting('labelSubmit', $this->translator->trans('Ceres::Template.contactSend'))
             ->withSetting(
                 'mailTarget',
@@ -184,7 +165,7 @@ class DefaultContactPreset implements ContentPreset
             ->withSetting('layout', 'oneToOne');
 
         $row_2->createChild('first', 'Ceres::TextInputWidget')
-            ->withSetting('customClass','contact-form-subject')
+            ->withSetting('customClass', 'contact-form-subject')
             ->withSetting('label', $this->translator->trans('Ceres::Template.contactSubject'))
             ->withSetting('isRequired', true)
             ->withSetting('isMailSubject', true);
@@ -196,7 +177,7 @@ class DefaultContactPreset implements ContentPreset
         // ROW 3: Message
         //
         $formWidget->createChild('formFields', 'Ceres::TextAreaWidget')
-            ->withSetting('customClass','contact-form-message')
+            ->withSetting('customClass', 'contact-form-message')
             ->withSetting('rows', 15)
             ->withSetting('label', $this->translator->trans('Ceres::Template.contactMessage'))
             ->withSetting('fixedHeight', true)
@@ -205,34 +186,8 @@ class DefaultContactPreset implements ContentPreset
             ->withSetting('spacing.margin.top.value', 3)
             ->withSetting('spacing.margin.top.unit', null);
 
-        $textWidget = null;
-
         if ($this->config->contact->enableConfirmingPrivacyPolicy) {
-            $row_3 = $formWidget->createChild('formFields', 'Ceres::TwoColumnWidget')
-
-                ->withSetting('layout', 'oneToOne');
-
-            $row_3->createChild('first', 'Ceres::AcceptPrivacyPolicyWidget');
-
-            $textWidget = $row_3->createChild('second', 'Ceres::InlineTextWidget');
-        } else {
-            $textWidget = $formWidget->createChild('formFields', 'Ceres::InlineTextWidget');
+            $formWidget->createChild('formFields', 'Ceres::AcceptPrivacyPolicyWidget');
         }
-
-        $textWidget
-            ->withSetting('appearance', 'none')
-            ->withSetting(
-                'text',
-                '<p class=\'align-right\'>* {{ trans(\'Ceres::Template.contactRequiredField\') }}</p>'
-            )
-            ->withSetting('spacing.customPadding', true)
-            ->withSetting('spacing.padding.top.value', 0)
-            ->withSetting('spacing.padding.top.unit', null)
-            ->withSetting('spacing.padding.bottom.value', 0)
-            ->withSetting('spacing.padding.bottom.unit', null)
-            ->withSetting('spacing.padding.left.value', 0)
-            ->withSetting('spacing.padding.left.unit', null)
-            ->withSetting('spacing.padding.right.value', 0)
-            ->withSetting('spacing.padding.right.unit', null);
     }
 }

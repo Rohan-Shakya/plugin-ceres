@@ -35,7 +35,7 @@ class DefaultPageNotFoundPreset implements ContentPreset
         /** @var PresetWidgetFactory $row */
         $row = $preset
             ->createWidget("Ceres::TwoColumnWidget")
-            ->withSetting("customClass", "")
+            ->withSetting("customClass", "px-lg-5 mx-xl-5 my-5")
             ->withSetting("layout", "oneToOne")
             ->withSetting("layoutTablet", "oneToOne")
             ->withSetting("layoutMobile", "stackedMobile");
@@ -54,12 +54,9 @@ class DefaultPageNotFoundPreset implements ContentPreset
             ->withSetting("spacing.padding.right.value", 0)
             ->withSetting("spacing.padding.right.unit", null);
 
-        $row->createChild("first", "Ceres::SeparatorWidget")
-            ->withSetting("customClass", "");
-
         $row->createChild("first", "Ceres::LinkWidget")
             ->withSetting("text", $translator->trans("Ceres::Template.pageNotFoundHomepage"))
-            ->withSetting("customClass", "")
+            ->withSetting("customClass", "widget-dark")
             ->withSetting("appearance", "primary")
             ->withSetting("size", "md")
             ->withSetting("block", false)
@@ -68,7 +65,7 @@ class DefaultPageNotFoundPreset implements ContentPreset
 
         $row->createChild("second", "Ceres::InlineTextWidget")
             ->withSetting("text", '<p class="align-right">404</p>')
-            ->withSetting("customClass", "not-found-text")
+            ->withSetting("customClass", "not-found-text m-0 p-0")
             ->withSetting("appearance", "none");
 
         return $preset->toArray();

@@ -70,9 +70,7 @@ class DefaultCheckoutPreset implements ContentPreset
     private function createLeftSide($twoColumnWidget)
     {
         $bgContainer = $twoColumnWidget->createChild('first', 'Ceres::BackgroundWidget');
-        $this->setBackgroundWidgetSettings($bgContainer)
-            ->withSetting("spacing.margin.top.value", 0)
-            ->withSetting("spacing.margin.bottom.value", 0);
+        $bgContainer->withSetting("customClass", "pr-0 pr-lg-3");
 
         $this->createAddressWidget('1', $bgContainer);
         $this->createAddressWidget('2', $bgContainer);
@@ -89,10 +87,11 @@ class DefaultCheckoutPreset implements ContentPreset
      */
     private function createAddressWidget($type, $bgContainer)
     {
-        $addressWidget = $bgContainer->createChild('background', 'Ceres::AddressWidget')->withSetting(
-            'addressType',
-            $type
-        );
+        $addressWidget = $bgContainer->createChild('background', 'Ceres::AddressWidget');
+        
+        $addressWidget
+        ->withSetting('addressType', $type)
+        ->withSetting('customClass', 'widget-transparent');
 
         if ($type == '1') {
             $addressWidget
@@ -170,16 +169,13 @@ class DefaultCheckoutPreset implements ContentPreset
     private function createRightSide($twoColumnWidget)
     {
         $bgContainer = $twoColumnWidget->createChild('second', 'Ceres::BackgroundWidget');
-        $this->setBackgroundWidgetSettings($bgContainer)
-            ->withSetting('customClass', 'h-100')
-            ->withSetting("spacing.margin.top.value", 0)
-            ->withSetting("spacing.margin.bottom.value", 0);
+        $bgContainer->withSetting('customClass', 'pl-0 pl-lg-3 h-100 bg-white');
 
         $this->createBasketWidget($bgContainer);
-        $this->createCouponWidget($bgContainer);
 
         $stickyContainer = $bgContainer->createChild('background', 'Ceres::StickyContainerWidget');
         $this->createBasketTotalsWidget($stickyContainer);
+        $this->createCouponWidget($stickyContainer);
         $this->createPlaceOrderWidget($stickyContainer);
         $this->createCancelPaymentWidget($stickyContainer);
     }
@@ -202,20 +198,13 @@ class DefaultCheckoutPreset implements ContentPreset
             ->withSetting("spacing.padding.right.value", 0)
             ->withSetting("spacing.padding.right.unit", null);
 
-        $bgContainer->createChild('background', 'Ceres::SeparatorWidget')
-            ->withSetting("customMargin", true)
-            ->withSetting("margin.top.value", 1)
-            ->withSetting("margin.top.unit", null)
-            ->withSetting("margin.bottom.value", 3)
-            ->withSetting("margin.bottom.unit", null);
-
         $bgContainer->createChild('background', 'Ceres::BasketWidget')
             ->withSetting('appearance', 'primary')
+            ->withSetting("spacing.customMargin", true)
+            ->withSetting("spacing.margin.bottom.value", 3)
+            ->withSetting("spacing.margin.bottom.unit", null)
             ->withSetting('basketDetailsData', ['']);
 
-        $bgContainer->createChild('background', 'Ceres::SeparatorWidget')
-            ->withSetting('margin.top', 'auto')
-            ->withSetting('margin.bottom', 'auto');
     }
 
     /**
@@ -224,11 +213,8 @@ class DefaultCheckoutPreset implements ContentPreset
     private function createCouponWidget($bgContainer)
     {
         $bgContainer->createChild('background', 'Ceres::CouponWidget')
+            ->withSetting('customClass', 'widget-dark')
             ->withSetting('appearance', 'primary');
-
-        $bgContainer->createChild('background', 'Ceres::SeparatorWidget')
-            ->withSetting('margin.top', 'auto')
-            ->withSetting('margin.bottom', 'auto');
     }
 
     /**
@@ -312,17 +298,13 @@ class DefaultCheckoutPreset implements ContentPreset
         $this->preset->createWidget('Ceres::InlineTextWidget')
             ->withSetting("text", $text)
             ->withSetting("appearance", "none")
-            ->withSetting("customPadding", true)
-            ->withSetting("padding.top.value", 4)
-            ->withSetting("padding.top.unit", null)
-            ->withSetting("padding.bottom.value", 2)
-            ->withSetting("padding.bottom.unit", null)
-            ->withSetting("customMargin", true)
-            ->withSetting("margin.bottom.value", 0)
-            ->withSetting("margin.bottom.unit", null);
-
-        $this->preset->createWidget('Ceres::SeparatorWidget')
-            ->withSetting('margin.top', 'auto')
-            ->withSetting('margin.bottom', 'auto');
+            ->withSetting("spacing.customPadding", true)
+            ->withSetting("spacing.padding.right.value", 0)
+            ->withSetting("spacing.padding.right.unit", null)
+            ->withSetting("spacing.padding.left.value", 0)
+            ->withSetting("spacing.padding.left.unit", null)
+            ->withSetting("spacing.customMargin", true)
+            ->withSetting("spacing.margin.top.value", 5)
+            ->withSetting("spacing.margin.top.unit", null);
     }
 }

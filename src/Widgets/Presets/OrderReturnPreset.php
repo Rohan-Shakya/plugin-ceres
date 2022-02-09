@@ -22,7 +22,7 @@ class OrderReturnPreset implements ContentPreset
     private $preset;
 
     use HasWhiteBackground;
-    
+
     /**
      * @inheritDoc
      */
@@ -35,18 +35,21 @@ class OrderReturnPreset implements ContentPreset
         $this->createWidget("Ceres::InlineTextWidget")
             ->withSetting("text", '<h1>{{ trans("Ceres::Template.return") }}</h1>')
             ->withSetting("appearance", "none")
-            ->withSetting("customClass", "")
-            ->withSetting("spacing.customPadding", true)
-            ->withSetting("spacing.padding.left.value", 0)
-            ->withSetting("spacing.padding.left.unit", null)
-            ->withSetting("spacing.padding.right.value", 0)
-            ->withSetting("spacing.padding.right.unit", null);
+            ->withSetting("customClass", "container")
+            ->withSetting("spacing.customMargin", true)
+            ->withSetting("spacing.margin.top.value", 5)
+            ->withSetting("spacing.margin.top.unit", null)
+            ->withSetting("spacing.margin.bottom.value", 4)
+            ->withSetting("spacing.margin.bottom.unit", null);
 
         $this->createWidget("Ceres::OrderReturnWidget")
             ->withSetting("appearance", "primary")
-            ->withSetting("customClass", "")
-            ->withSetting("itemDetailsData", ["availability"]);
+            ->withSetting("customClass", "widget-dark")
+            ->withSetting("itemDetailsData", ["availability"])
+            ->withSetting("spacing.customMargin", true)
+            ->withSetting("spacing.margin.bottom.value", 5)
+            ->withSetting("spacing.margin.bottom.unit", null);
 
-            return $this->preset->toArray();
+        return $this->preset->toArray();
     }
 }

@@ -21,7 +21,7 @@ use Plenty\Modules\ShopBuilder\Contracts\ContentPreset;
 class WishListPreset implements ContentPreset
 {
     use HasWhiteBackground;
-    
+
     /**
      * @inheritDoc
      */
@@ -30,25 +30,26 @@ class WishListPreset implements ContentPreset
         /** @var PresetHelper */
         $preset = pluginApp(PresetHelper::class);
 
-        $this->createBackground($preset);
-
-        $this->createWidget("Ceres::InlineTextWidget")
+        $preset->createWidget("Ceres::InlineTextWidget")
             ->withSetting("text", '<h1>{{ trans("Ceres::Template.wishList") }}</h1>')
             ->withSetting("appearance", "none")
             ->withSetting("spacing.customPadding", true)
-            ->withSetting("spacing.padding.top.value", 0)
-            ->withSetting("spacing.padding.top.unit", null)
-            ->withSetting("spacing.padding.bottom.value", 0)
-            ->withSetting("spacing.padding.bottom.unit", null)
             ->withSetting("spacing.padding.left.value", 0)
             ->withSetting("spacing.padding.left.unit", null)
             ->withSetting("spacing.padding.right.value", 0)
-            ->withSetting("spacing.padding.right.unit", null);
+            ->withSetting("spacing.padding.right.unit", null)
+            ->withSetting("spacing.customMargin", true)
+            ->withSetting("spacing.margin.top.value", 5)
+            ->withSetting("spacing.margin.top.unit", null)
+            ->withSetting("spacing.margin.bottom.value", 3)
+            ->withSetting("spacing.margin.bottom.unit", null);
 
-        $this->createWidget("Ceres::SeparatorWidget");
-
-        $this->createWidget("Ceres::WishListWidget")
+        $preset->createWidget("Ceres::WishListWidget")
             ->withSetting("appearance", "primary")
+            ->withSetting("customClass", "widget-dark")
+            ->withSetting("spacing.customMargin", true)
+            ->withSetting("spacing.margin.bottom.value", 5)
+            ->withSetting("spacing.margin.bottom.unit", null)
             ->withSetting("itemDetailsData", ["wishListItem.variation.availability"]);
 
         return $preset->toArray();

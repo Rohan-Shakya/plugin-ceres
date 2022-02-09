@@ -30,11 +30,11 @@ class DefaultChangeMailPreset implements ContentPreset
         /** @var PresetWidgetFactory $row */
         $row = $preset
             ->createWidget("Ceres::ThreeColumnWidget")
-            ->withSetting("customClass", "")
+            ->withSetting("customClass", "my-5")
             ->withSetting("layout", "oneToTwoToOne");
 
         $row->createChild("second", "Ceres::InlineTextWidget")
-            ->withSetting("text", '<h1>{{ trans("Ceres::Template.myAccountChangeEmail") }}</h1><p>{{ trans("Ceres::Template.myAccountChangeEmailInfoText") }}</p>')
+            ->withSetting("text", '<h2>{{ trans("Ceres::Template.myAccountChangeEmail") }}</h2><p>{{ trans("Ceres::Template.myAccountChangeEmailInfoText") }}</p>')
             ->withSetting("customClass", "")
             ->withSetting("appearance", "none")
             ->withSetting("spacing.customPadding", true)
@@ -44,7 +44,7 @@ class DefaultChangeMailPreset implements ContentPreset
             ->withSetting("spacing.padding.right.unit", null);
 
         $row->createChild("second", "Ceres::ChangeMailWidget")
-            ->withSetting("customClass", "")
+            ->withSetting("customClass", "widget-dark")
             ->withSetting("appearance", "primary");
 
         return $preset->toArray();

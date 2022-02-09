@@ -59,6 +59,7 @@ class DefaultLoginPreset implements ContentPreset
     private function createTwoColumnWidget(): void
     {
         $this->twoColumnWidget = $this->preset->createWidget('Ceres::TwoColumnWidget')
+            ->withSetting('customClass', 'px-lg-5 mx-xl-5 my-5')
             ->withSetting('layout', 'oneToOne')
             ->withSetting('layoutTablet', 'oneToOne')
             ->withSetting('layoutMobile', 'stackedMobile');
@@ -67,8 +68,8 @@ class DefaultLoginPreset implements ContentPreset
     private function createTextWidgetLogin(): void
     {
         $this->twoColumnWidget->createChild('first', 'Ceres::InlineTextWidget')
-            ->withSetting('customClass', 'h1')
-            ->withSetting('text', '<div>{{ trans("Ceres::Template.login") }}</div>')
+            ->withSetting('customClass', 'mr-0 mr-md-3')
+            ->withSetting('text', '<h2>{{ trans("Ceres::Template.login") }}</h2>')
             ->withSetting('appearance', 'none')
             ->withSetting('spacing.customPadding', true)
             ->withSetting('spacing.padding.top.value', 0)
@@ -89,17 +90,19 @@ class DefaultLoginPreset implements ContentPreset
     private function createLoginWidget(): void
     {
         $this->twoColumnWidget->createChild('first', 'Ceres::LoginWidget')
-            ->withSetting('customClass', '')
+            ->withSetting('customClass', 'widget-dark mr-0 mr-md-3')
             ->withSetting('spacing.customMargin', true)
             ->withSetting('spacing.margin.top.value', 3)
-            ->withSetting('spacing.margin.top.unit', null);
+            ->withSetting('spacing.margin.top.unit', null)
+            ->withSetting('spacing.margin.bottom.value', 4)
+            ->withSetting('spacing.margin.bottom.unit', null);
     }
 
     private function createTextWidgetGuest(): void
     {
         $this->twoColumnWidget->createChild('second', 'Ceres::InlineTextWidget')
-            ->withSetting('customClass', 'h1')
-            ->withSetting('text', '<div>{{ trans("Ceres::Template.loginOrderAsGuest") }}</div>')
+            ->withSetting('customClass', 'ml-0 ml-md-3')
+            ->withSetting('text', '<h2>{{ trans("Ceres::Template.loginOrderAsGuest") }}</h2>')
             ->withSetting('appearance', 'none')
             ->withSetting('spacing.customPadding', true)
             ->withSetting('spacing.padding.top.value', 0)
@@ -120,7 +123,7 @@ class DefaultLoginPreset implements ContentPreset
     private function createGuestLoginWidget(): void
     {
         $this->twoColumnWidget->createChild('second', 'Ceres::GuestLoginWidget')
-            ->withSetting('customClass', '')
+            ->withSetting('customClass', 'widget-dark ml-0 ml-md-3')
             ->withSetting('spacing.customMargin', true)
             ->withSetting('spacing.margin.top.value', 3)
             ->withSetting('spacing.margin.top.unit', null);
@@ -129,8 +132,8 @@ class DefaultLoginPreset implements ContentPreset
     private function createTextWidgetRegister(): void
     {
         $this->twoColumnWidget->createChild('first', 'Ceres::InlineTextWidget')
-            ->withSetting('customClass', 'h1')
-            ->withSetting('text', '<div>{{ trans("Ceres::Template.loginCallToAction") }}</div>')
+            ->withSetting('customClass', 'text-right mr-0 mr-md-3')
+            ->withSetting('text', '<h5>{{ trans("Ceres::Template.loginCallToAction") }}</h5>')
             ->withSetting('appearance', 'none')
             ->withSetting('spacing.customPadding', true)
             ->withSetting('spacing.padding.top.value', 0)
@@ -151,11 +154,11 @@ class DefaultLoginPreset implements ContentPreset
     private function createRegisterLinkWidget(): void
     {
         $registerLinkWidget = $this->twoColumnWidget->createChild('first', 'Ceres::LinkWidget')
-            ->withSetting('customClass', '')
+            ->withSetting('customClass', 'widget-dark text-right mr-0 mr-md-3')
             ->withSetting('block', 'true')
             ->withSetting('spacing.customMargin', true)
-            ->withSetting('spacing.margin.top.value', 3)
-            ->withSetting('spacing.margin.top.unit', null)
+            ->withSetting('spacing.margin.bottom.value', 4)
+            ->withSetting('spacing.margin.bottom.unit', null)
             ->withSetting('text', $this->translator->trans('Ceres::Template.loginRegister'));
 
         if (in_array(RouteConfig::REGISTER, RouteConfig::getEnabledRoutes())

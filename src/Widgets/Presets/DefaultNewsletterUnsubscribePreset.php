@@ -30,15 +30,15 @@ class DefaultNewsletterUnsubscribePreset implements ContentPreset
         /** @var PresetWidgetFactory $row */
         $row = $preset
             ->createWidget("Ceres::ThreeColumnWidget")
-            ->withSetting("customClass", "")
+            ->withSetting("customClass", "my-5")
             ->withSetting("layout", "oneToTwoToOne");
 
         $row->createChild("second", "Ceres::InlineTextWidget")
-            ->withSetting("text", '<h1>{{ trans("Ceres::Template.newsletterOptOutTitle") }}</h1><p>{{ trans("Ceres::Template.newsletterOptOutInfoText") }}</p>')
+            ->withSetting("text", '<h2>{{ trans("Ceres::Template.newsletterOptOutTitle") }}</h2><p>{{ trans("Ceres::Template.newsletterOptOutInfoText") }}</p>')
             ->withSetting("customClass", "");
 
         $row->createChild("second", "Ceres::NewsletterUnsubscribeWidget")
-            ->withSetting("customClass", "")
+            ->withSetting("customClass", "widget-dark")
             ->withSetting("appearance", "primary");
 
         return $preset->toArray();

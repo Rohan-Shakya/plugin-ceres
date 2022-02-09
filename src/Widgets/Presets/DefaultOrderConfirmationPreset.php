@@ -71,11 +71,10 @@ class DefaultOrderConfirmationPreset implements ContentPreset
         $this->createTwoColumnWidget();
 
         $this->createOrderDataWidget();
-        $this->createThreeColumnWidget();
 
         $this->createTrackingLinkWidget();
-        $this->createOrderDocumentsWidget();
         $this->createRetourLinkWidget();
+        $this->createOrderDocumentsWidget();
 
         $this->createPurchasedItemsWidget();
         $this->createOrderTotalsWidget();
@@ -94,37 +93,31 @@ class DefaultOrderConfirmationPreset implements ContentPreset
              ->withSetting("text", "<h1 class=\"h2\">{{ trans(\"Ceres::Template.orderConfirmationThanks\") }}</h1>")
              ->withSetting("appearance", "none")
              ->withSetting("spacing.customPadding", true)
-             ->withSetting("spacing.padding.top.value", 0)
-             ->withSetting("spacing.padding.top.unit", null)
-             ->withSetting("spacing.padding.bottom.value", 0)
-             ->withSetting("spacing.padding.bottom.unit", null)
              ->withSetting("spacing.padding.left.value", 0)
              ->withSetting("spacing.padding.left.unit", null)
+             ->withSetting("spacing.padding.right.value", 0)
+             ->withSetting("spacing.padding.right.unit", null)
              ->withSetting("spacing.customMargin", true)
-             ->withSetting("spacing.margin.bottom.value", 0)
-             ->withSetting("spacing.margin.bottom.unit", null);
+             ->withSetting("spacing.margin.top.value", 5)
+             ->withSetting("spacing.margin.top.unit", null);
 
         $this->createWidget("Ceres::InlineTextWidget")
              ->withSetting("text", "<p>{{ trans(\"Ceres::Template.orderConfirmationWillBeProcessed\") }}</p>")
              ->withSetting("appearance", "none")
-             ->withSetting("spacing.customMargin", true)
-             ->withSetting("spacing.margin.bottom.value", 5)
-             ->withSetting("spacing.margin.bottom.unit", null)
              ->withSetting("spacing.customPadding", true)
-             ->withSetting("spacing.padding.top.value", 0)
-             ->withSetting("spacing.padding.top.unit", null)
-             ->withSetting("spacing.padding.bottom.value", 0)
-             ->withSetting("spacing.padding.bottom.unit", null)
              ->withSetting("spacing.padding.left.value", 0)
              ->withSetting("spacing.padding.left.unit", null)
              ->withSetting("spacing.padding.right.value", 0)
-             ->withSetting("spacing.padding.right.unit", null);
+             ->withSetting("spacing.padding.right.unit", null)
+             ->withSetting("spacing.customMargin", true)
+             ->withSetting("spacing.margin.bottom.value", 3)
+             ->withSetting("spacing.margin.bottom.unit", null);
     }
 
     private function createOrderDataWidget()
     {
         $this->twoColumnWidget->createChild("first", "Ceres::OrderDataWidget")
-                              ->withSetting("customClass", "order-data")
+                              ->withSetting("customClass", "order-data border-0  mr-0 mr-lg-3 widget-dark btn-outline")
                               ->withSetting("addressFields", ["title", "contactPerson", "name1", "name2", "name3", "name4", "address1", "address2", "address3", "address4", "postalCode", "town", "country"])
                               ->withSetting("spacing.customMargin", true)
                               ->withSetting("spacing.margin.bottom.value", 4)
@@ -134,7 +127,7 @@ class DefaultOrderConfirmationPreset implements ContentPreset
     private function createPurchasedItemsWidget()
     {
         $this->twoColumnWidget->createChild("second", "Ceres::PurchasedItemsWidget")
-                              ->withSetting("customClass","item-data")
+                              ->withSetting("customClass","item-data border-0 ml-0 ml-lg-3 widget-dark")
                               ->withSetting("spacing.customMargin", true)
                               ->withSetting("spacing.margin.bottom.value", 4)
                               ->withSetting("spacing.margin.bottom.unit", null);
@@ -142,8 +135,8 @@ class DefaultOrderConfirmationPreset implements ContentPreset
 
     private function createTrackingLinkWidget()
     {
-        $this->threeColumnWidget->createChild("first", "Ceres::LinkWidget")
-                                ->withSetting("customClass", "order-tracking")
+        $this->twoColumnWidget->createChild("first", "Ceres::LinkWidget")
+                                ->withSetting("customClass", "order-tracking widget-dark mr-0 mr-lg-3")
                                 ->withSetting("block", "true")
                                 ->withSetting("text", $this->translator->trans("Ceres::Widget.urlTrackingLabel"))
                                 ->withSetting("url.value", "tracking")
@@ -153,14 +146,14 @@ class DefaultOrderConfirmationPreset implements ContentPreset
 
     private function createOrderDocumentsWidget()
     {
-        $this->threeColumnWidget->createChild("second", "Ceres::OrderDocumentsWidget")
-                                ->withSetting("customClass","order-documents");
+        $this->twoColumnWidget->createChild("first", "Ceres::OrderDocumentsWidget")
+                                ->withSetting("customClass","order-documents  widget-dark mr-0 mr-lg-3");
     }
 
     private function createRetourLinkWidget()
     {
-        $this->threeColumnWidget->createChild("third", "Ceres::LinkWidget")
-                                ->withSetting("customClass","order-return")
+        $this->twoColumnWidget->createChild("first", "Ceres::LinkWidget")
+                                ->withSetting("customClass","order-return widget-dark mr-0 mr-lg-3")
                                 ->withSetting("block", "true")
                                 ->withSetting("text", $this->translator->trans("Ceres::Widget.urlReturnLabel"))
                                 ->withSetting("url.value", "return")
@@ -171,6 +164,7 @@ class DefaultOrderConfirmationPreset implements ContentPreset
     private function createOrderTotalsWidget()
     {
         $this->twoColumnWidget->createChild("second", "Ceres::OrderTotalsWidget")
+                              ->withSetting("customClass", "border-0 ml-0 ml-lg-3")
                               ->withSetting("visibleFields", ["orderValueNet", "orderValueGross", "rebate", "shippingCostsNet", "shippingCostsGross", "promotionCoupon", "totalSumNet", "vats", "totalSumGross", "salesCoupon", "openAmount", "additionalCosts"]);
     }
 
@@ -183,7 +177,7 @@ class DefaultOrderConfirmationPreset implements ContentPreset
     private function createFourColumnWidget()
     {
         $this->fourColumnWidget = $this->createWidget("Ceres::FourColumnWidget")
-                                       ->withSetting("customClass","");
+                                       ->withSetting("customClass","mt-4 mb-5");
     }
 
     private function createBottomNavigation()
@@ -192,12 +186,14 @@ class DefaultOrderConfirmationPreset implements ContentPreset
                                 ->withSetting("appearance", "primary")
                                 ->withSetting("block", "true")
                                 ->withSetting("text", $this->translator->trans("Ceres::Template.orderConfirmationHomepage"))
+                                ->withSetting("customClass", "widget-dark mr-0 mr-lg-3")
                                 ->withSetting("url.type", "external")
                                 ->withSetting("url.value", $this->shopUrls->home);
 
         $myAccountLinkWidget = null;
         $myAccountLinkWidget = $this->fourColumnWidget->createChild("third", "Ceres::LinkWidget")
                                ->withSetting("appearance", "primary")
+                               ->withSetting("customClass", "widget-dark ml-0 ml-lg-3")
                                ->withSetting("block", "true")
                                ->withSetting("text", $this->translator->trans("Ceres::Template.orderConfirmationMyAccount"));
 
@@ -218,6 +214,7 @@ class DefaultOrderConfirmationPreset implements ContentPreset
     private function createTwoColumnWidget()
     {
         $this->twoColumnWidget = $this->createWidget('Ceres::TwoColumnWidget')
+                                      ->withSetting("customClass", "order-data border-0  mr-0 mr-lg-3")
                                       ->withSetting("layout", "oneToOne");
     }
 

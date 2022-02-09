@@ -40,7 +40,7 @@ class DefaultBasketPreset implements ContentPreset
 
     /** @var Translator */
     private $translator;
-    
+
     /**
      * @inheritDoc
      */
@@ -66,7 +66,7 @@ class DefaultBasketPreset implements ContentPreset
             ->withSetting('text', '<h1>{{ trans(\'Ceres::Template.basket\') }}</h1>')
             ->withSetting('appearance', 'none')
             ->withSetting('spacing.customPadding', true)
-            ->withSetting('spacing.padding.top.value', 5)
+            ->withSetting('spacing.padding.top.value', 0)
             ->withSetting('spacing.padding.top.unit', null)
             ->withSetting('spacing.padding.bottom.value', 0)
             ->withSetting('spacing.padding.bottom.unit', null)
@@ -75,11 +75,10 @@ class DefaultBasketPreset implements ContentPreset
             ->withSetting('spacing.padding.right.value', 0)
             ->withSetting('spacing.padding.right.unit', null)
             ->withSetting('spacing.customMargin', true)
-            ->withSetting('spacing.margin.top.value', 3)
-            ->withSetting('spacing.margin.top.unit', null);
-
-        $this->preset->createWidget('Ceres::SeparatorWidget')
-            ->withSetting('customClass', '');
+            ->withSetting('spacing.margin.top.value', 5)
+            ->withSetting('spacing.margin.top.unit', null)
+            ->withSetting('spacing.margin.bottom.value', 4)
+            ->withSetting('spacing.margin.bottom.unit', null);
     }
 
     /**
@@ -94,6 +93,7 @@ class DefaultBasketPreset implements ContentPreset
 
         // BASKET ITEMS
         $bgContainer->createChild('background', 'Ceres::BasketWidget')
+            ->withSetting('customClass', 'mr-0 mr-md-3 widget-transparent')
             ->withSetting('basketDetailsData', ['basket.item.availability']);
     }
 
@@ -104,16 +104,15 @@ class DefaultBasketPreset implements ContentPreset
     {
         $stickyContainer = $twoColumnWidget->createChild('second', 'Ceres::StickyContainerWidget');
         $bgContainer = $stickyContainer->createChild('sticky', 'Ceres::BackgroundWidget');
-        $this->setBackgroundWidgetSettings($bgContainer)
-            ->withSetting("spacing.margin.top.value", 0)
-            ->withSetting("spacing.margin.bottom.value", 0);
+        $bgContainer->withSetting('customClass', 'pl-0 pl-lg-3 h-100 bg-white');
 
         // SHIPPING COUNTY SELECT
         $bgContainer->createChild('background', 'Ceres::ShippingCountryWidget')
-            ->withSetting('customClass', '');
+            ->withSetting('customClass', '')
+            ->withSetting('spacing.customMargin', true)
+            ->withSetting("spacing.margin.bottom.value", 3)
+            ->withSetting("spacing.margin.bottom.unit", null);
 
-        $bgContainer->createChild('background', 'Ceres::SeparatorWidget')
-            ->withSetting('customClass', '');
 
         // BASKET TOTALS
         $bgContainer->createChild('background', 'Ceres::BasketTotalsWidget')
@@ -134,29 +133,29 @@ class DefaultBasketPreset implements ContentPreset
                     'salesCoupon',
                     'openAmount'
                 ]
-            );
+            )
+            ->withSetting('spacing.customMargin', true)
+            ->withSetting("spacing.margin.bottom.value", 3)
+            ->withSetting("spacing.margin.bottom.unit", null);
 
-        $bgContainer->createChild('background', 'Ceres::SeparatorWidget')
-            ->withSetting('customClass', '');
-
-        // COUPON
         $bgContainer->createChild('background', 'Ceres::CouponWidget')
-            ->withSetting('customClass', '');
+            ->withSetting('customClass', 'widget-dark btn-outline')
+            ->withSetting('spacing.customMargin', true)
+            ->withSetting("spacing.margin.bottom.value", 3)
+            ->withSetting("spacing.margin.bottom.unit", null);
 
-        $bgContainer->createChild('background', 'Ceres::SeparatorWidget')
-            ->withSetting('customClass', '');
 
         // CHECKOUT BUTTON
         $checkoutLinkWidget = $bgContainer->createChild('background', 'Ceres::LinkWidget')
-            ->withSetting('customClass', '')
+            ->withSetting('customClass', 'widget-dark')
             ->withSetting('appearance', 'primary')
             ->withSetting('size', '')
             ->withSetting('block', 'true')
             ->withSetting('text', $this->translator->trans('Ceres::Template.basketCheckout'));
 
         if (in_array(RouteConfig::CHECKOUT, RouteConfig::getEnabledRoutes()) && RouteConfig::getCategoryId(
-                RouteConfig::CHECKOUT
-            ) > 0) {
+            RouteConfig::CHECKOUT
+        ) > 0) {
             $checkoutLinkWidget
                 ->withSetting('url.type', 'category')
                 ->withSetting('url.value', RouteConfig::getCategoryId(RouteConfig::CHECKOUT));

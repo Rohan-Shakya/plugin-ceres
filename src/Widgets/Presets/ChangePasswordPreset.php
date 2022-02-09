@@ -30,11 +30,11 @@ class ChangePasswordPreset implements ContentPreset
         /** @var PresetWidgetFactory $row */
         $row = $preset
             ->createWidget("Ceres::ThreeColumnWidget")
-            ->withSetting("customClass", "")
+            ->withSetting("customClass", "my-5")
             ->withSetting("layout", "oneToTwoToOne");
 
         $row->createChild("second", "Ceres::InlineTextWidget")
-            ->withSetting("text", '<h1>{{ trans("Ceres::Template.resetPwResetPassword") }}</h1>')
+            ->withSetting("text", '<h2>{{ trans("Ceres::Template.resetPwResetPassword") }}</h2>')
             ->withSetting("customClass", "")
             ->withSetting("appearance", "none")
             ->withSetting("spacing.customPadding", true)
@@ -44,7 +44,7 @@ class ChangePasswordPreset implements ContentPreset
             ->withSetting("spacing.padding.right.unit", null);
 
         $row->createChild("second", "Ceres::ChangePasswordWidget")
-            ->withSetting("customClass", "")
+            ->withSetting("customClass", "widget-dark")
             ->withSetting("appearance", "primary");
 
         return $preset->toArray();

@@ -122,8 +122,13 @@ class DefaultSingleItemPreset implements ContentPreset
             ->withSetting('spacing.padding.right.unit', null)
             ->withSetting('spacing.padding.top.value', 0)
             ->withSetting('spacing.padding.top.unit', null)
-            ->withSetting('spacing.padding.bottom.value', 2)
+            ->withSetting('spacing.padding.bottom.value', 3)
             ->withSetting('spacing.padding.bottom.unit', null)
+            ->withSetting('spacing.customMargin', true)
+            ->withSetting('spacing.margin.top.value', 0)
+            ->withSetting('spacing.margin.top.unit', null)
+            ->withSetting('spacing.margin.bottom.value', 0)
+            ->withSetting('spacing.margin.bottom.unit', null)
             ->withSetting('text', $dataProvider);
     }
     private function createNameHeader()
@@ -155,6 +160,11 @@ class DefaultSingleItemPreset implements ContentPreset
             ->withSetting('spacing.padding.top.unit', null)
             ->withSetting('spacing.padding.bottom.value', 0)
             ->withSetting('spacing.padding.bottom.unit', null)
+            ->withSetting('spacing.customMargin', true)
+            ->withSetting('spacing.margin.top.value', 0)
+            ->withSetting('spacing.margin.top.unit', null)
+            ->withSetting('spacing.margin.bottom.value', 3)
+            ->withSetting('spacing.margin.bottom.unit', null)
             ->withSetting('text', "<h1>$dataProvider</h1>")
             ->withSetting('appearance','none');
     }

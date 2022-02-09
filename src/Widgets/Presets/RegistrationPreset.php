@@ -32,7 +32,7 @@ class RegistrationPreset implements ContentPreset
                                     ->withSetting("customClass", "")
                                     ->withSetting("layout", "oneToTwoToOne");
 
-        $popper = "<h1>{{ trans('Ceres::Template.regRegisterAccount') }}<popper v-cloak class='float-right' style='z-index:1;'><template #handle><button class='btn btn-icon btn-secondary btn-sm'><i class='fa fa-info'></i></button></template><template #title>{{ trans('Ceres::Template.regContactInformations') }}</template><template #content><ul class='pl-3'><li class='mb-3'>{{ trans('Ceres::Template.regContactInfoText1') }}</li><li class='mb-3'>{{ trans('Ceres::Template.regContactInfoText2') }}</li><li class='mb-3'>{{ trans('Ceres::Template.regContactInfoText3') }}</li><li>{{ trans('Ceres::Template.regContactInfoText4') }}</li></ul></template></popper></h1>";
+        $popper = '<div class="d-flex justify-content-between align-items-center"><h2 class="d-inline m-0">{{ trans(\'Ceres::Template.regRegisterAccount\') }}</h2><popper v-cloak class="float-right" style="z-index:1;"><template #handle><button class="btn btn-icon btn-secondary btn-sm"><i class="fa fa-info"></i></button></template><template #title>{{ trans(\'Ceres::Template.regContactInformations\') }}</template><template #content><ul class="pl-3"><li class="mb-3">{{ trans(\'Ceres::Template.regContactInfoText1\') }}</li><li class="mb-3">{{ trans(\'Ceres::Template.regContactInfoText2\') }}</li><li class="mb-3">{{ trans(\'Ceres::Template.regContactInfoText3\') }}</li><li>{{ trans(\'Ceres::Template.regContactInfoText4\') }}</li></ul></template></popper></div>';
 
         $threeColumnWidget->createChild("second", "Ceres::CodeWidget")
                           ->withSetting("text", $popper)
@@ -45,7 +45,7 @@ class RegistrationPreset implements ContentPreset
                           ->withSetting("spacing.margin.bottom.unit", null);
 
         $threeColumnWidget->createChild("second", "Ceres::RegistrationWidget")
-                          ->withSetting("customClass", "");
+                          ->withSetting("customClass", "widget-dark");
 
         return $preset->toArray();
     }

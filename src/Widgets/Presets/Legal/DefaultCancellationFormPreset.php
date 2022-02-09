@@ -22,7 +22,7 @@ class DefaultCancellationFormPreset implements ContentPreset
 {
     /** @var PresetHelper $preset */
     private $preset;
-    
+
     /**
      * @inheritDoc
      */
@@ -32,8 +32,6 @@ class DefaultCancellationFormPreset implements ContentPreset
 
         $this->createHeadline();
         $this->createLegalTextsWidget();
-        $this->createSeparatorWidget();
-        $this->createPrintButtonWidget();
 
         return $this->preset->toArray();
     }
@@ -46,48 +44,36 @@ class DefaultCancellationFormPreset implements ContentPreset
         $text .= '{% endautoescape %}';
 
         $this->preset->createWidget('Ceres::CodeWidget')
-                     ->withSetting("text", $text)
-                     ->withSetting("appearance", "none")
-                     ->withSetting("spacing.customPadding", true)
-                     ->withSetting("spacing.padding.top.value", 3)
-                     ->withSetting("spacing.padding.top.unit", null)
-                     ->withSetting("spacing.padding.bottom.value", 0)
-                     ->withSetting("spacing.padding.bottom.unit", null)
-                     ->withSetting("spacing.customMargin", true)
-                     ->withSetting("spacing.margin.bottom.value", 0)
-                     ->withSetting("spacing.margin.bottom.unit", null);
-    
-        $this->preset->createWidget("Ceres::SeparatorWidget")
-                     ->withSetting("customMargin", true)
-                     ->withSetting("margin.top.value", 5)
-                     ->withSetting("margin.top.unit", null)
-                     ->withSetting("margin.bottom.value", 5)
-                     ->withSetting("margin.bottom.unit", null);
+            ->withSetting("customClass", "container mx-auto")
+            ->withSetting("text", $text)
+            ->withSetting("appearance", "none")
+            ->withSetting("spacing.customMargin", true)
+            ->withSetting("spacing.margin.top.value", 5)
+            ->withSetting("spacing.margin.top.unit", null)
+            ->withSetting("spacing.margin.bottom.value", 4)
+            ->withSetting("spacing.margin.bottom.unit", null);
     }
 
     private function createLegalTextsWidget()
     {
-        $this->preset->createWidget("Ceres::LegalTextsWidget")
+        $twoColumnWidget = $this->preset->createWidget('Ceres::TwoColumnWidget')
+            ->withSetting("customClass", "container mx-auto px-0 mb-5")
+            ->withSetting('layout', 'stacked')
+            ->withSetting('layoutTablet', 'stacked')
+            ->withSetting('layoutMobile', 'stackedMobile');
+        $twoColumnWidget->createChild("first", "Ceres::LegalTextsWidget")
             ->withSetting("type", "cancellationForm")
             ->withSetting("spacing.customMargin", true)
             ->withSetting("spacing.margin.bottom.value", 0)
             ->withSetting("spacing.margin.bottom.unit", null);
+
+        $this->createPrintButtonWidget($twoColumnWidget);
     }
 
-    private function createSeparatorWidget()
+    private function createPrintButtonWidget($row)
     {
-        $this->preset->createWidget("Ceres::SeparatorWidget")
-            ->withSetting("customMargin", true)
-            ->withSetting("margin.top.value", 5)
-            ->withSetting("margin.top.unit", null)
-            ->withSetting("margin.bottom.value", 5)
-            ->withSetting("margin.bottom.unit", null);
-    }
-
-    private function createPrintButtonWidget()
-    {
-        $this->preset->createWidget("Ceres::PrintButtonWidget")
-            ->withSetting("customClass", "float-right")
+        $row->createChild("first", "Ceres::PrintButtonWidget")
+            ->withSetting("customClass", "widget-dark text-right")
             ->withSetting("buttonSize", "md");
     }
 }
